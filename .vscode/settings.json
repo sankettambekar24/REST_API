@@ -1,0 +1,5 @@
+{
+    "editor.inlineSuggest.edits.allowCodeShifting": "never",
+    "github.copilot.chat.languageContext.typescript.enabled": false,
+    "editor.inlineSuggest.enabled": false
+}
