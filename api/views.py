@@ -9,6 +9,8 @@ from rest_framework.views import APIView
 from employee.models import employee
 from django.http import Http404
 from rest_framework import generics,mixins
+from blogs.models import blog,comment
+from blogs.serializer import commentSerializer,blogSerializer
 
 @api_view(['GET','POST'])
 def studentsview(request):
@@ -120,3 +122,33 @@ class EmployeeDetail(generics.RetrieveUpdateDestroyAPIView):
      queryset= employee.objects.all()
      serializer_class = EmployeeSerializer
      lookup_field='pk'
+
+
+
+
+
+
+
+
+##neseted serializer
+
+class BlogView(generics.ListCreateAPIView):
+    queryset= blog.objects.all()
+    serializer_class= blogSerializer
+    
+
+class BlogDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= blog.objects.all()
+    serializer_class= blogSerializer
+    lookup_field='pk'
+
+
+class CommentView(generics.ListCreateAPIView):
+    queryset= comment.objects.all()
+    serializer_class= commentSerializer
+    
+
+class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= comment.objects.all()
+    serializer_class= commentSerializer
+    lookup_field='pk'
