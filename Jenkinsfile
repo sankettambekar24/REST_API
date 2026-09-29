@@ -40,16 +40,20 @@ pipeline {
             }
         }
          stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh '''
-                        sonar-scanner \
-                        -Dsonar.projectKey=REST_API \
-                        -Dsonar.projectName=REST_API \
-                        -Dsonar.sources=.
-                    '''
-                }
+    steps {
+        withSonarQubeEnv('SonarQube') {
+            script {
+                def scannerHome = tool 'SonarQube-Scanner'
+
+                sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=REST_API \
+                    -Dsonar.projectName=REST_API \
+                    -Dsonar.sources=.
+                """
             }
         }
+    }
+}
     }
 }
