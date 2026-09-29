@@ -55,5 +55,23 @@ pipeline {
         }
     }
 }
+
+
+        stage('Dependency Check') {
+            steps {
+                script {
+                    def dependencyCheckHome = tool 'Dependency-Check'
+
+                    sh """
+                        ${dependencyCheckHome}/bin/dependency-check.sh \
+                        --project 'REST_API' \
+                        --scan . \
+                        --format HTML \
+                        --format XML \
+                        --out dependency-check-report
+                    """
+                }
+            }
+}
     }
 }
