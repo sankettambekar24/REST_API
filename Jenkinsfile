@@ -86,5 +86,15 @@ pipeline {
         }
     }
 }
+            stage('Trivy Scan') {
+                steps {
+                    sh '''
+                        trivy fs \
+                        --severity HIGH,CRITICAL \
+                        --exit-code 1 \
+                        .
+                    '''
+                }
+            }
     }
 }
