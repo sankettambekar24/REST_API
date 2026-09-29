@@ -96,5 +96,12 @@ pipeline {
                     '''
                 }
             }
+                    stage('Docker Build') {
+            steps {
+                sh '''
+                    docker build -t rest-api:latest .
+                '''
+            }
+        }
     }
 }
