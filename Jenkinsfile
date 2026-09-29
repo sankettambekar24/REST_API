@@ -39,5 +39,17 @@ pipeline {
                 '''
             }
         }
+         stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                        sonar-scanner \
+                        -Dsonar.projectKey=REST_API \
+                        -Dsonar.projectName=REST_API \
+                        -Dsonar.sources=.
+                    '''
+                }
+            }
+        }
     }
 }
