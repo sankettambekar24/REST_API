@@ -68,17 +68,20 @@ pipeline {
                     variable: 'NVD_API_KEY'
                 )
             ]) {
-                sh """
-                    mkdir -p dependency-check-report
+                withEnv(["DC_HOME=${dependencyCheckHome}"]) {
+                    sh '''
+                        mkdir -p dependency-check-report
 
-                    ${dependencyCheckHome}/bin/dependency-check.sh \
-                    --project 'REST_API' \
-                    --scan . \
-                    --format HTML \
-                    --format XML \
-                    --out dependency-check-report \
-                    --nvdApiKey "\$NVD_API_KEY"
-                """
+                        "$DC_HOME/bin/dependency-check.sh" \
+                        --project "REST_API" \
+                        --scan . \
+                        --format HTML \
+                        --format XML \
+                        --out dependency-check-report \
+                        --data "$HOME/dependency-check-data" \
+                        --nvdApiKey "$NVD_API_KEY"
+                    '''
+                }
             }
         }
     }
