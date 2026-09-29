@@ -63,6 +63,8 @@ pipeline {
                     def dependencyCheckHome = tool 'Dependency-Check'
 
                     sh """
+                        mkdir -p dependency-check-report
+
                         ${dependencyCheckHome}/bin/dependency-check.sh \
                         --project 'REST_API' \
                         --scan . \
@@ -72,6 +74,6 @@ pipeline {
                     """
                 }
             }
-}
+        }
     }
 }
