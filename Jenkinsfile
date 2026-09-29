@@ -57,7 +57,7 @@ pipeline {
 }
 
 
-        stage('Dependency Check') {
+       stage('Dependency Check') {
     steps {
         script {
             def dependencyCheckHome = tool 'Dependency-Check'
@@ -79,7 +79,7 @@ pipeline {
                         --format XML \
                         --out dependency-check-report \
                         --data "$HOME/dependency-check-data" \
-                        --nvdApiKey "$NVD_API_KEY"
+                        --noupdate
                     '''
                 }
             }
