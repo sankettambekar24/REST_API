@@ -103,5 +103,41 @@ pipeline {
                 '''
             }
         }
+
+        post {
+    success {
+        emailext(
+            subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """
+Build Successful!
+
+Job: ${env.JOB_NAME}
+Build Number: #${env.BUILD_NUMBER}
+Status: SUCCESS
+
+Check Jenkins:
+${env.BUILD_URL}
+""",
+            to: "sanket.tambekar24@spit.ac.in"
+        )
+    }
+
+            failure {
+                emailext(
+                    subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: """
+        Build Failed!
+
+        Job: ${env.JOB_NAME}
+        Build Number: #${env.BUILD_NUMBER}
+        Status: FAILURE
+
+        Check Jenkins:
+        ${env.BUILD_URL}
+        """,
+                    to: "sanket.tambekar24@spit.ac.in"
+                )
+            }
+        }
     }
 }
