@@ -4,6 +4,10 @@ pipeline {
         label 'Ubuntu-Agent'
     }
 
+    triggers {
+        githubPush()
+    }
+
     stages {
 
         stage('Checkout') {
@@ -146,8 +150,8 @@ Job: ${env.JOB_NAME}
 Build Number: #${env.BUILD_NUMBER}
 Status: SUCCESS
 
-Docker image:
-${env.BUILD_URL}
+Docker Image:
+${env.JOB_NAME}/rest-api:latest
 
 Check Jenkins:
 ${env.BUILD_URL}
