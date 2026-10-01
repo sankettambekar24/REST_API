@@ -106,6 +106,32 @@ pipeline {
                 '''
             }
         }
+
+        stage('Docker Push') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-credentials',
+                        usernameVariable: 'DOCKER_USERNAME',
+                        passwordVariable: 'DOCKER_PASSWORD'
+                    )
+                ]) {
+                    sh '''
+                        echo "$DOCKER_PASSWORD" | docker login \
+                            -u "$DOCKER_USERNAME" \
+                            --password-stdin
+
+                        docker tag rest-api:latest \
+                            "$DOCKER_USERNAME/rest-api:latest"
+
+                        docker push \
+                            "$DOCKER_USERNAME/rest-api:latest"
+
+                        docker logout
+                    '''
+                }
+            }
+        }
     }
 
     post {
@@ -119,6 +145,9 @@ Build Successful!
 Job: ${env.JOB_NAME}
 Build Number: #${env.BUILD_NUMBER}
 Status: SUCCESS
+
+Docker image:
+${env.BUILD_URL}
 
 Check Jenkins:
 ${env.BUILD_URL}
